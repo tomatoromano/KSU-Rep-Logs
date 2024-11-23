@@ -2,67 +2,158 @@
 <html>
 <head>
     <title>RepLogs</title>
-</head>
-
-<style>
- body {
+    <style>
+        body {
             background: linear-gradient(to bottom, #91DDF2 1%, white 30%);
             background-attachment: fixed;
             height: 100vh;
             margin: 0;
             background-size: 100% 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
         }
 
+        /* Styling for the logo */
+        .logo img {
+            position: absolute;
+            height: 700px;
+            width: 700px;
+            left: 550px;
+            top: -70px;
+        }
 
-.logo img{
-    position: absolute;
-    height: 500px;
-    width: 500px;
-    left: 600px;
-    top: 10px;
+        /* Styling for the header */
+        .header img {
+            position: absolute;
+            height: 550px;
+            width: 550px;
+            left: 75px;
+            top: 130px;
+        }
 
-}
+        /* Styling for the main information section */
+        .info-section {
+            width: 85%;
+            height: 40%;
+            position: relative;
+            margin-top: 500px; 
+            padding: 20px;
+            background-color: #E0F7FA; 
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end; /* Pushes content to the bottom */
+            align-items: center;
+        }
 
-.header img{
-    position: absolute;
-    height: 550px;
-    width: 550px;
-    left: 75px;
-    top: 100px;
-}
+        /* Styling for the dropdown button */
+        .add-workout {
+            margin-top: 10px; /* Adds slight space between label and dropdown */
+        }
 
-.yoga img{
-    position: absolute;
-    height: 500px;
-    width: 600px;
-    left: 75px;
-    top: 400px;
-}
+        .add-workout select {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            background-color: #91DDF2; 
+            color: #fff;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
 
-.weights img{
-    position: absolute;
-    height: 500px;
-    width: 600px;
-    left: 500px;
-    top: 400px;
-}
+        .add-workout select:hover {
+            background-color: #007bff; 
+        }
 
-.running img{
-    position: absolute;
-    height: 500px;
-    width: 600px;
-    left: 950px;
-    top: 400px;
-}
+        .add-workout select:focus {
+            outline: none; 
+            background-color: #ed7bea; 
+        }
 
-</style>
+        /* Styling for the sign-out button */
+        .signout-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 15px 30px; /* Increased size */
+            font-size: 18px; /* Made text larger */
+            font-weight: bold;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
 
-<div class="logo">
-    <img src="images/REP lOgs.png" alt="logo">
-</div>
+        .signout-button:hover {
+            background-color: #0056b3;
+        }
 
-<div class="header">
-    <img src="images\Welcome back.png" alt="welcome">
-</div>
+        .info img {
+            position: absolute;
+            height: 420px;
+            width: 420px;
+            top: 350px;
+            left: 90px;
+            z-index: 1;
+        }
 
+        .mascot img {
+            position: absolute;
+            height: 550px;
+            width: 620px;
+            top: 350px;
+            right: 20px;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Logo -->
+    <div class="logo">
+        <img src="images/REP lOgs.png" alt="logo">
+    </div>
+
+    <!-- Header -->
+    <div class="header">
+        <img src="images/Welcome back.png" alt="welcome">
+    </div>
+
+    <!-- Sign Out Button -->
+    <a href="index.html" class="signout-button">Sign Out</a>
+
+    <!--info-->
+    <div class="info">
+        <img src="images/Workout history.png" alt="info, workout history">
+    </div>
+
+    <!--mascot-->
+    <div class="mascot">
+        <img src="images/replogslady.PNG" alt="mascot">
+    </div>
+
+    <!-- Main section for workout information -->
+    <div class="info-section">
+        <p>Add and view your workouts here!</p>
+
+        <!-- Dropdown button for adding a workout -->
+        <div class="add-workout">
+            <label for="workout-options">Add Another Workout:</label>
+            <select id="workout-options">
+                <option value="yoga">Yoga</option>
+                <option value="weights">Weights</option>
+                <option value="cardio">Cardio</option>
+            </select>
+        </div>
+    </div>
+
+</body>
 </html>
