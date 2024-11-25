@@ -113,7 +113,48 @@
             right: 20px;
             z-index: 1;
         }
+
+        .form-section {
+            width: 85%;
+            padding: 20px;
+            margin-top: 20px;
+            background-color: #E0F7FA;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: none;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #272727;
+        }
+
     </style>
+    <script>
+        function showForm() {
+            const workoutType = document.getElementById("workout-options").value;
+            document.getElementById("yoga-form").style.display = "none";
+            document.getElementById("weights-form").style.display = "none";
+            document.getElementById("cardio-form").style.display = "none";
+
+            if (workoutType === "yoga") {
+                document.getElementById("yoga-form").style.display = "block";
+            } else if (workoutType === "weights") {
+                document.getElementById("weights-form").style.display = "block";
+            } else if (workoutType === "cardio") {
+                document.getElementById("cardio-form").style.display = "block";
+            }
+        }
+    </script>
 </head>
 <body>
 
@@ -147,12 +188,51 @@
         <!-- Dropdown button for adding a workout -->
         <div class="add-workout">
             <label for="workout-options">Add Another Workout:</label>
-            <select id="workout-options">
+            <select id="workout-options" onchange="showForm()">
+                <option value="">Select Workout Type</option>
                 <option value="yoga">Yoga</option>
                 <option value="weights">Weights</option>
                 <option value="cardio">Cardio</option>
             </select>
         </div>
+    </div>
+
+    <!-- Yoga Form -->
+    <div id="yoga-form" class="form-section">
+        <h3>Yoga Workout</h3>
+        <form id="yogaWorkoutForm" action="your_backend_endpoint" method="post">
+            <label for="yoga-duration">Duration (minutes):</label>
+            <input type="number" id="yoga-duration" name="duration" required><br><br>
+            <label for="yoga-intensity">Intensity (Low, Medium, High):</label>
+            <input type="text" id="yoga-intensity" name="intensity" required><br><br>
+            <button type="submit">Add Yoga Workout</button>
+        </form>
+    </div>
+
+    <!-- Weights Form -->
+    <div id="weights-form" class="form-section">
+        <h3>Weights Workout</h3>
+        <form id="weightsWorkoutForm" action="your_backend_endpoint" method="post">
+            <label for="weights-sets">Sets:</label>
+            <input type="number" id="weights-sets" name="sets" required><br><br>
+            <label for="weights-reps">Reps per Set:</label>
+            <input type="number" id="weights-reps" name="reps" required><br><br>
+            <label for="weights-weight">Weight (kg):</label>
+            <input type="number" id="weights-weight" name="weight" required><br><br>
+            <button type="submit">Add Weights Workout</button>
+        </form>
+    </div>
+
+     <!-- Cardio Form -->
+     <div id="cardio-form" class="form-section">
+        <h3>Cardio Workout</h3>
+        <form id="cardioWorkoutForm" action="your_backend_endpoint" method="post">
+            <label for="cardio-duration">Duration (minutes):</label>
+            <input type="number" id="cardio-duration" name="duration" required><br><br>
+            <label for="cardio-intensity">Intensity (Low, Medium, High):</label>
+            <input type="text" id="cardio-intensity" name="intensity" required><br><br>
+            <button type="submit">Add Cardio Workout</button>
+        </form>
     </div>
 
 </body>
