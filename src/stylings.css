@@ -1,0 +1,191 @@
+/* index.html */
+
+body {
+    background: linear-gradient(to bottom, #91DDF2 1%, white 30%);
+    background-attachment: fixed;
+    height: 100vh;
+    margin: 0;
+    background-size: 100% 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.title img {
+    position: absolute;
+    height: 800px;
+    width: 800px;
+    left: 490px;
+    top: -60px;
+    z-index: -1;
+}
+
+.text {
+    position: absolute;
+    font-size: larger;
+    font-weight: bold;
+    left: 650px;
+    top: 300px;
+    color: black;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    padding: 20px;
+    border: 1px solid #91ddf2;
+    border-radius: 8px;
+    background: #91ddf2;
+}
+
+input[type="text"] {
+    width: 300px;
+    padding: 10px;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #272727;
+}
+
+/* mainpage.html */
+
+body {
+    background: linear-gradient(to bottom, #91DDF2 1%, white 30%);
+    background-attachment: fixed;
+    height: 100vh;
+    margin: 0;
+    background-size: 100% 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.logo img {
+    position: absolute;
+    height: 700px;
+    width: 700px;
+    left: 550px;
+    top: -70px;
+}
+
+.header img {
+    position: absolute;
+    height: 550px;
+    width: 550px;
+    left: 75px;
+    top: 130px;
+}
+
+.info img {
+    position: absolute;
+    height: 420px;
+    width: 420px;
+    top: 350px;
+    left: 90px;
+    z-index: 1;
+}
+
+.mascot img {
+    position: absolute;
+    height: 550px;
+    width: 620px;
+    top: 350px;
+    right: 20px;
+    z-index: 1;
+}
+
+.info-section {
+    width: 85%;
+    height: 40%;
+    position: relative;
+    margin-top: 500px; 
+    padding: 20px;
+    background-color: #E0F7FA; 
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.add-workout select {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #91DDF2; 
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.add-workout select:hover {
+    background-color: #007bff; 
+}
+
+.add-workout select:focus {
+    outline: none; 
+    background-color: #ed7bea; 
+}
+
+.signout-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 15px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.signout-button:hover {
+    background-color: #0056b3;
+}
+
+.form-section {
+    width: 85%;
+    padding: 20px;
+    margin-top: 20px;
+    background-color: #E0F7FA;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: none;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #272727;
+}

@@ -2,105 +2,63 @@
 <html>
 <head>
     <title>RepLogs</title>
-    <style>
-        body {
-    background: linear-gradient(to bottom, #91DDF2 1%, white 30%);
-    background-attachment: fixed;
-    height: 100vh;
-    margin: 0;
-    background-size: 100% 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-        .title img {
-            position: absolute;
-            height: 800px;
-            width: 800px;
-            left: 490px;
-            top: -60px;
-            z-index: -1;
-        }
-
-        .text{
-            position: absolute;
-            font-size: larger;
-            font-weight: bold;
-            left: 650px;
-            top: 300px;
-            color: black;
-        }
-
-        form {
-            display:flex;
-            flex-direction: column;
-            gap: 20px;
-            align-items: center;
-            padding: 20px;
-            border: 1px solid #91ddf2;
-            border-radius: 8px;
-            background: #91ddf2;
-        }
-
-        input[type="text"] {
-            width: 300px;
-            padding: 10px;
-            border: 1px solid #fff;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-
-        button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            background-color: #007bff;
-            color: #fff;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #272727;
-        }
-
-    </style>
+    <link rel="stylesheet" href="stylings.css">
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1419.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/amazon-cognito-identity-js/6.1.0/amazon-cognito-identity.min.js"></script>
     <script>
-        // JavaScript validation function
-        function validateForm() {
-            // Get the values of the input fields
-            var username = document.getElementById("username").value;
-            var password = document.getElementById("password").value;
+        // AWS Cognito setup
+        const CognitoUserPool = AmazonCognitoIdentity.CognitoUserPool;
+        const poolData = {
+            UserPoolId: 'us-east-1_xxxxxxxx',       // Replace with your User Pool ID<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Delete comment after
+            ClientId:  'xxxxxxxxxxxxxxx'             // Replace with your App Client ID<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Delete comment after
+        };
+        const userPool = new CognitoUserPool(poolData);
 
-            // Check if both fields have values with exactly 8 characters
-            if (username.length < 8 || password.length < 8) {
-                alert("Both username and password must be at least 8 characters long.");
-                return false; // Prevent form submission
-            }
-            window.location.href ="mainpage.html";
-            return false;
+        function signIn(username, password) {
+            const authenticationData = {
+                Username: username,
+                Password: password
+            };
+            const authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails(authenticationData);
+            const userData = {
+                Username: username,
+                Pool: userPool
+            };
+            const cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
+            cognitoUser.authenticateUser(authenticationDetails, {
+                onSuccess: (result) => {
+                    console.log('Access token: ' + result.getAccessToken().getJwtToken());
+                    window.location.href = "mainpage.html";
+                },
+                onFailure: (err) => {
+                    alert(err.message || JSON.stringify(err));
+                }
+            });
+        }
+
+        function validateForm() {
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            signIn(username, password); // Replaced navigation logic with AWS Cognito authentication
+            return false;               // Prevents default form submission
         }
     </script>
 </head>
 <body>
     <!--Rep Logs logo-->
     <div class="title">
-       <img src="images/REP lOgs.png" alt="website header">
-   </div>
+        <img src="images/REP lOgs.png" alt="website header">
+    </div>
 
-   <div class="text">
-    Please enter 8 character username and password to sign in
-   </div>
+    <div class="text">
+        Please enter an 8-character username and password to sign in
+    </div>
 
- <form id="signIn" onsubmit="return validateForm()">
-    <input type="text" id="username" placeholder="Please enter username" maxlength="8" required>
-    <input type="text"  id="password" placeholder="Please enter password" maxlength="8" required>
-    <button type="submit">Submit</button>
- </form>
-
-  
-
+    <form id="signIn" onsubmit="return validateForm()">
+        <input type="text" id="username" placeholder="Please enter username" maxlength="8" required>
+        <input type="text" id="password" placeholder="Please enter password" maxlength="8" required>
+        <button type="submit">Submit</button>
+    </form>
 </body>
 </html>

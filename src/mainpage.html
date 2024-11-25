@@ -2,143 +2,7 @@
 <html>
 <head>
     <title>RepLogs</title>
-    <style>
-        body {
-            background: linear-gradient(to bottom, #91DDF2 1%, white 30%);
-            background-attachment: fixed;
-            height: 100vh;
-            margin: 0;
-            background-size: 100% 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-        }
-
-        /* Styling for the logo */
-        .logo img {
-            position: absolute;
-            height: 700px;
-            width: 700px;
-            left: 550px;
-            top: -70px;
-        }
-
-        /* Styling for the header */
-        .header img {
-            position: absolute;
-            height: 550px;
-            width: 550px;
-            left: 75px;
-            top: 130px;
-        }
-
-        /* Styling for the main information section */
-        .info-section {
-            width: 85%;
-            height: 40%;
-            position: relative;
-            margin-top: 500px; 
-            padding: 20px;
-            background-color: #E0F7FA; 
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end; /* Pushes content to the bottom */
-            align-items: center;
-        }
-
-        /* Styling for the dropdown button */
-        .add-workout {
-            margin-top: 10px; /* Adds slight space between label and dropdown */
-        }
-
-        .add-workout select {
-            padding: 10px 20px;
-            font-size: 16px;
-            border: none;
-            border-radius: 5px;
-            background-color: #91DDF2; 
-            color: #fff;
-            cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
-        }
-
-        .add-workout select:hover {
-            background-color: #007bff; 
-        }
-
-        .add-workout select:focus {
-            outline: none; 
-            background-color: #ed7bea; 
-        }
-
-        /* Styling for the sign-out button */
-        .signout-button {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            padding: 15px 30px; /* Increased size */
-            font-size: 18px; /* Made text larger */
-            font-weight: bold;
-            color: white;
-            background-color: #007bff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            text-decoration: none;
-        }
-
-        .signout-button:hover {
-            background-color: #0056b3;
-        }
-
-        .info img {
-            position: absolute;
-            height: 420px;
-            width: 420px;
-            top: 350px;
-            left: 90px;
-            z-index: 1;
-        }
-
-        .mascot img {
-            position: absolute;
-            height: 550px;
-            width: 620px;
-            top: 350px;
-            right: 20px;
-            z-index: 1;
-        }
-
-        .form-section {
-            width: 85%;
-            padding: 20px;
-            margin-top: 20px;
-            background-color: #E0F7FA;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            display: none;
-        }
-
-        button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            background-color: #007bff;
-            color: #fff;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #272727;
-        }
-
-    </style>
+    <link rel="stylesheet" href="stylings.css">
     <script>
         function showForm() {
             const workoutType = document.getElementById("workout-options").value;
@@ -154,10 +18,14 @@
                 document.getElementById("cardio-form").style.display = "block";
             }
         }
+
+        function signOut() {
+            // Optional -- We can add sign out logic here if we think it is necessary
+            window.location.href = "index.html";
+        }
     </script>
 </head>
 <body>
-
     <!-- Logo -->
     <div class="logo">
         <img src="images/REP lOgs.png" alt="logo">
@@ -171,21 +39,21 @@
     <!-- Sign Out Button -->
     <a href="index.html" class="signout-button">Sign Out</a>
 
-    <!--info-->
+    <!-- Info Section -->
     <div class="info">
         <img src="images/Workout history.png" alt="info, workout history">
     </div>
 
-    <!--mascot-->
+    <!-- Mascot -->
     <div class="mascot">
         <img src="images/replogslady.PNG" alt="mascot lady">
     </div>
 
-    <!-- Main section for workout information -->
+    <!-- Main Section for Workout Information -->
     <div class="info-section">
         <p>Add and view your workouts here!</p>
 
-        <!-- Dropdown button for adding a workout -->
+        <!-- Dropdown for Workout Type -->
         <div class="add-workout">
             <label for="workout-options">Add Another Workout:</label>
             <select id="workout-options" onchange="showForm()">
@@ -197,7 +65,7 @@
         </div>
     </div>
 
-    <!-- Yoga Form -->
+    <!-- Forms for Different Workout Types -->
     <div id="yoga-form" class="form-section">
         <h3>Yoga Workout</h3>
         <form id="yogaWorkoutForm" action="add_yoga.php" method="post">
@@ -209,7 +77,6 @@
         </form>
     </div>
 
-    <!-- Weights Form -->
     <div id="weights-form" class="form-section">
         <h3>Weights Workout</h3>
         <form id="weightsWorkoutForm" action="add_weights.php" method="post">
@@ -223,8 +90,7 @@
         </form>
     </div>
 
-     <!-- Cardio Form -->
-     <div id="cardio-form" class="form-section">
+    <div id="cardio-form" class="form-section">
         <h3>Cardio Workout</h3>
         <form id="cardioWorkoutForm" action="add_cardio.php" method="post">
             <label for="cardio-duration">Duration (minutes):</label>
@@ -234,6 +100,5 @@
             <button type="submit">Add Cardio Workout</button>
         </form>
     </div>
-
 </body>
 </html>
