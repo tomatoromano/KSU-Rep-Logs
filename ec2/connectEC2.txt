@@ -1,0 +1,3 @@
+EC2 Endpoint -- ec2-3-81-202-13.compute-1.amazonaws.com
+
+ssh -i HayesKeyy.pem ubuntu@ec2-3-81-202-13.compute-1.amazonaws.com
