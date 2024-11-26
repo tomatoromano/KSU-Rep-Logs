@@ -50,39 +50,13 @@
             align-items: center;
         }
 
-        /* Styling for the dropdown button */
-        .add-workout {
-            margin-top: 10px; /* Adds slight space between label and dropdown */
-        }
-
-        .add-workout select {
-            padding: 10px 20px;
-            font-size: 16px;
-            border: none;
-            border-radius: 5px;
-            background-color: #91DDF2; 
-            color: #fff;
-            cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
-        }
-
-        .add-workout select:hover {
-            background-color: #007bff; 
-        }
-
-        .add-workout select:focus {
-            outline: none; 
-            background-color: #ed7bea; 
-        }
-
         /* Styling for the buttons */
         .signout-button,
         .back-button {
             position: absolute;
             top: 20px;
-            padding: 15px 30px; /* Increased size */
-            font-size: 18px; /* Made text larger */
+            padding: 15px 30px; 
+            font-size: 18px; 
             font-weight: bold;
             color: white;
             background-color: #007bff;
@@ -114,13 +88,32 @@
             z-index: 1;
         }
 
-        .mascot img {
+        .flexguy img {
             position: absolute;
             height: 550px;
             width: 620px;
-            top: 350px;
+            top: 150px;
             right: 20px;
-            z-index: 1;
+            z-index: -1;
+        }
+
+        /* Styling for the upload button */
+        .upload-button {
+            margin-top: 20px;
+            padding: 15px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            background-color: #0056b3;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .upload-button:hover {
+            background-color: #ed7bea;
         }
     </style>
 </head>
@@ -144,27 +137,17 @@
 
     <!--info-->
     <div class="info">
-        <img src="images/Workout history.png" alt="info, workout history">
+        <img src="images\progress pics.png" alt="info, progress history">
     </div>
 
-    <!--mascot-->
-    <div class="mascot">
-        <img src="images/replogslady.PNG" alt="mascot lady">
+    <div class="flexguy">
+        <img src="images\flexing guy.png" alt="flex png">
     </div>
 
     <!-- Main section for workout information -->
     <div class="info-section">
-        <p>Add and view your workouts here!</p>
-
-        <!-- Dropdown button for adding a workout -->
-        <div class="add-workout">
-            <label for="workout-options">Add Another Workout:</label>
-            <select id="workout-options">
-                <option value="yoga">Yoga</option>
-                <option value="weights">Weights</option>
-                <option value="cardio">Cardio</option>
-            </select>
-        </div>
+        <p>Add and view your progress pictures here!</p>
+        <button class="upload-button">Upload</button>
     </div>
 
 </body>
