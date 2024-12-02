@@ -38,21 +38,21 @@
             width: 85%;
             height: 40%;
             position: relative;
-            margin-top: 500px; 
+            margin-top: 500px;
             padding: 20px;
-            background-color: #E0F7FA; 
+            background-color: #E0F7FA;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             text-align: center;
             display: flex;
             flex-direction: column;
-            justify-content: flex-end; /* Pushes content to the bottom */
+            justify-content: flex-end;
             align-items: center;
         }
 
         /* Styling for the dropdown button */
         .add-workout {
-            margin-top: 10px; /* Adds slight space between label and dropdown */
+            margin-top: 10px;
         }
 
         .add-workout select {
@@ -60,7 +60,7 @@
             font-size: 16px;
             border: none;
             border-radius: 5px;
-            background-color: #91DDF2; 
+            background-color: #91DDF2;
             color: #fff;
             cursor: pointer;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
@@ -68,21 +68,21 @@
         }
 
         .add-workout select:hover {
-            background-color: #007bff; 
+            background-color: #007bff;
         }
 
         .add-workout select:focus {
-            outline: none; 
-            background-color: #ed7bea; 
+            outline: none;
+            background-color: #ed7bea;
         }
 
-        /* Styling for the sign-out button */
-        .signout-button {
+        /* Styling for the buttons */
+        .signout-button,
+        .back-button {
             position: absolute;
             top: 20px;
-            right: 20px;
-            padding: 15px 30px; /* Increased size */
-            font-size: 18px; /* Made text larger */
+            padding: 15px 30px;
+            font-size: 18px;
             font-weight: bold;
             color: white;
             background-color: #007bff;
@@ -92,7 +92,16 @@
             text-decoration: none;
         }
 
-        .signout-button:hover {
+        .signout-button {
+            right: 20px;
+        }
+
+        .back-button {
+            right: 170px;
+        }
+
+        .signout-button:hover,
+        .back-button:hover {
             background-color: #0056b3;
         }
 
@@ -137,7 +146,6 @@
         button:hover {
             background-color: #272727;
         }
-
     </style>
     <script>
         function showForm() {
@@ -170,6 +178,9 @@
 
     <!-- Sign Out Button -->
     <a href="index.html" class="signout-button">Sign Out</a>
+
+    <!-- Back Button -->
+    <a href="home.html" class="back-button">Back</a>
 
     <!--info-->
     <div class="info">
@@ -223,8 +234,8 @@
         </form>
     </div>
 
-     <!-- Cardio Form -->
-     <div id="cardio-form" class="form-section">
+    <!-- Cardio Form -->
+    <div id="cardio-form" class="form-section">
         <h3>Cardio Workout</h3>
         <form id="cardioWorkoutForm" action="add_cardio.php" method="post">
             <label for="cardio-duration">Duration (minutes):</label>
