@@ -1,8 +1,8 @@
-EC2 Endpoint -- ec2-3-81-202-13.compute-1.amazonaws.com
+EC2 Endpoint -- ec2-54-165-0-228.compute-1.amazonaws.com
 
 RDS Endpoint -- database-2.cn4ksqii2unx.us-east-1.rds.amazonaws.com
 Credentials -- 
     username: admin
     password: password
 
-ssh -i HayesKeyy.pem ubuntu@ec2-3-81-202-13.compute-1.amazonaws.com
+ssh -i HayesKeyy.pem ubuntu@ec2-54-165-0-228.compute-1.amazonaws.com
