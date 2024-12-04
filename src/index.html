@@ -2,80 +2,6 @@
 <html>
 <head>
     <title>RepLogs</title>
-    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1211.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/amazon-cognito-identity-js@5.2.3/dist/amazon-cognito-identity.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-
-<script>
-    // Cognito Configuration
-    const cognitoConfig = {
-        UserPoolId: 'us-east-1_UPsWRMyce', // Replace with your User Pool ID
-        ClientId: '501gea8vshupbl7km3d5p5n6tr',  // Replace with your App Client ID
-        ClientSecret: 'gi72ufdoq7vtmaj2fgpch2c7pv9fspues98nqsa88fmcunuav74'  // Replace with your App Client Secret
-    };
-
-    // Initialize Cognito User Pool
-    const userPool = new AmazonCognitoIdentity.CognitoUserPool({
-        UserPoolId: cognitoConfig.UserPoolId,
-        ClientId: cognitoConfig.ClientId
-    });
-
-    // Function to generate SECRET_HASH
-    function generateSecretHash(username) {
-        const secretKey = cognitoConfig.ClientSecret;
-        const message = username + cognitoConfig.ClientId;
-        const secretHash = CryptoJS.HmacSHA256(message, secretKey).toString(CryptoJS.enc.Base64);
-        return secretHash;
-    }
-
-    // Login function
-    async function login(username, password) {
-        const secretHash = generateSecretHash(username);
-
-        const authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails({
-            Username: username,
-            Password: password,
-            SecretHash: secretHash
-        });
-
-        const userData = {
-            Username: username,
-            Pool: userPool
-        };
-
-        const cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
-
-        return new Promise((resolve, reject) => {
-            cognitoUser.authenticateUser(authenticationDetails, {
-                onSuccess: function (result) {
-                    console.log('Login successful:', result);
-                    resolve(result);
-                },
-                onFailure: function (err) {
-                    console.error('Login failed:', err);
-                    reject(err);
-                }
-            });
-        });
-    }
-
-    // Form submission handler
-    async function handleSubmit(event) {
-        event.preventDefault();
-
-        const username = document.getElementById("username").value;
-        const password = document.getElementById("password").value;
-
-        try {
-            const result = await login(username, password);
-            alert('Login successful! Redirecting...');
-            window.location.href = "mainpage.html"; // Redirect to your main page
-        } catch (error) {
-            alert('Login failed: ' + error.message);
-        }
-    }
-</script>
-
     <style>
         body {
             background: linear-gradient(to bottom, #91DDF2 1%, white 30%);
@@ -96,39 +22,15 @@
             top: -60px;
             z-index: -1;
         }
-        .text {
-            position: absolute;
-            font-size: larger;
-            font-weight: bold;
-            left: 650px;
-            top: 300px;
-            color: black;
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            align-items: center;
-            padding: 20px;
-            border: 1px solid #91ddf2;
-            border-radius: 8px;
-            background: #91ddf2;
-        }
-        input[type="text"], input[type="password"] {
-            width: 300px;
-            padding: 10px;
-            border: 1px solid #fff;
-            border-radius: 5px;
-            font-size: 16px;
-        }
         button {
-            padding: 10px 20px;
+            padding: 20px 40px;
             border: none;
-            border-radius: 5px;
+            border-radius: 10px;
             background-color: #007bff;
             color: #fff;
-            font-size: 16px;
+            font-size: 24px;
             cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
         button:hover {
             background-color: #272727;
@@ -141,14 +43,9 @@
         <img src="images/REP lOgs.png" alt="website header">
     </div>
 
-    <div class="text">
-        Please enter an 8-character username and password to sign in.
-    </div>
-
-    <form id="signIn" onsubmit="handleSubmit(event)">
-        <input type="text" id="username" placeholder="Please enter username" maxlength="8" required>
-        <input type="password" id="password" placeholder="Please enter password" maxlength="8" required>
-        <button type="submit">Submit</button>
-    </form>
+    <!-- Single button in the center -->
+    <button onclick="window.location.href='https://us-east-1klaq6ojuf.auth.us-east-1.amazoncognito.com/login/continue?client_id=13g9d6elhfbav76vncremgdc33&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Floggedin.html&response_type=code&scope=email+openid+phone'">
+        Sign In/Sign Up
+    </button>
 </body>
 </html>

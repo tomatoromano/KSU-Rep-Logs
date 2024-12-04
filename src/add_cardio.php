@@ -21,9 +21,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Get POST data
     $duration = intval($_POST["duration"]);
     $intensity = $_POST["intensity"];
-    $user_id = "test_user"; // Replace with a real user_id
+    $user_id = $_POST['email']; // Get user email from form POST
 
-    // Insert into the `workouts` table
+    // Check if user exists in Users table
+    $check_user_query = "SELECT * FROM Users WHERE user_id = '$user_id'";
+    $result = $conn->query($check_user_query);
+
+    if ($result->num_rows == 0) {
+        // User does not exist, insert into Users table
+        $insert_user_query = "INSERT INTO Users (user_id) VALUES ('$user_id')";
+        if ($conn->query($insert_user_query) === TRUE) {
+            echo "User with email '$user_id' has been created.<br>";
+        } else {
+            die("Error creating user: " . $conn->error);
+        }
+    }
+
+    // Insert into the `Workouts` table
     $workout_type = 'Cardio';
     $sql_workout = "INSERT INTO Workouts (user_id, workout_type, date) VALUES ('$user_id', '$workout_type', NOW())";
 
