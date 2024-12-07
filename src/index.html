@@ -4,17 +4,16 @@
     <title>RepLogs</title>
     <style>
         body {
-    background: linear-gradient(to bottom, #91DDF2 1%, white 30%);
-    background-attachment: fixed;
-    height: 100vh;
-    margin: 0;
-    background-size: 100% 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
+            background: linear-gradient(to bottom, #91DDF2 1%, white 30%);
+            background-attachment: fixed;
+            height: 100vh;
+            margin: 0;
+            background-size: 100% 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
         .title img {
             position: absolute;
             height: 800px;
@@ -23,84 +22,30 @@
             top: -60px;
             z-index: -1;
         }
-
-        .text{
-            position: absolute;
-            font-size: larger;
-            font-weight: bold;
-            left: 650px;
-            top: 300px;
-            color: black;
-        }
-
-        form {
-            display:flex;
-            flex-direction: column;
-            gap: 20px;
-            align-items: center;
-            padding: 20px;
-            border: 1px solid #91ddf2;
-            border-radius: 8px;
-            background: #91ddf2;
-        }
-
-        input[type="text"] {
-            width: 300px;
-            padding: 10px;
-            border: 1px solid #fff;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-
         button {
-            padding: 10px 20px;
+            padding: 20px 40px;
             border: none;
-            border-radius: 5px;
+            border-radius: 10px;
             background-color: #007bff;
             color: #fff;
-            font-size: 16px;
+            font-size: 24px;
             cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-
         button:hover {
             background-color: #272727;
         }
-
     </style>
-    <script>
-        // JavaScript validation function
-        function validateForm() {
-            // Get the values of the input fields
-            var username = document.getElementById("username").value;
-            var password = document.getElementById("password").value;
-
-            // Check if both fields have values with exactly 8 characters
-            if (username.length < 8 || password.length < 8) {
-                alert("Both username and password must be at least 8 characters long.");
-                return false; // Prevent form submission
-            }
-            window.location.href ="home.html";
-            return false;
-        }
-    </script>
 </head>
 <body>
     <!--Rep Logs logo-->
     <div class="title">
-       <img src="images/REP lOgs.png" alt="website header">
-   </div>
+        <img src="images/REP lOgs.png" alt="website header">
+    </div>
 
-   <div class="text">
-    Please enter 8 character username and password to sign in
-   </div>
-
- <form id="signIn" onsubmit="return validateForm()">
-    <input type="text" id="username" placeholder="Please enter username" maxlength="8" required>
-    <input type="text"  id="password" placeholder="Please enter password" maxlength="8" required>
-    <button type="submit">Submit</button>
- </form>
-
-  
-
+    <!-- Single button in the center -->
+    <button onclick="window.location.href='https://us-east-1klaq6ojuf.auth.us-east-1.amazoncognito.com/login/continue?client_id=13g9d6elhfbav76vncremgdc33&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Floggedin.html&response_type=code&scope=email+openid+phone'">
+        Sign In/Sign Up
+    </button>
 </body>
 </html>
