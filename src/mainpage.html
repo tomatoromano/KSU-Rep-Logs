@@ -126,37 +126,91 @@
     </style>
     <script>
         function fetchWorkoutData() {
-            fetch('fetch_workouts.php') // Update this to the correct path if needed
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! Status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    const tableBody = document.getElementById('workout-table-body');
-                    tableBody.innerHTML = ''; // Clear existing rows
+    const params = new URLSearchParams(window.location.search);
+    const email = params.get('email');
 
-                    if (Array.isArray(data) && data.length > 0) {
-                        data.forEach(workout => {
-                            const row = document.createElement('tr');
-                            row.innerHTML = `
-                                <td>${workout.workout_id}</td>
-                                <td>${workout.user_id}</td>
-                                <td>${workout.workout_type}</td>
-                                <td>${workout.date}</td>
-                            `;
-                            tableBody.appendChild(row);
-                        });
+    if (!email) {
+        const tableBody = document.getElementById('workout-table-body');
+        tableBody.innerHTML = `<tr><td colspan="5">No email provided. Please include an email in the URL.</td></tr>`;
+        return;
+    }
+
+    fetch(`fetch_workouts.php?email=${encodeURIComponent(email)}`)
+        .then(response => response.json())
+        .then(data => {
+            const tableBody = document.getElementById('workout-table-body');
+            tableBody.innerHTML = '';
+
+            if (Array.isArray(data) && data.length > 0) {
+                data.forEach(workout => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${workout.workout_id}</td>
+                        <td>${workout.user_id}</td>
+                        <td>${workout.workout_type}</td>
+                        <td>${workout.date}</td>
+                        <td>
+                            <button onclick="viewWorkoutDetails(${workout.workout_id}, '${workout.workout_type}')">View Info</button>
+                        </td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            } else {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td colspan="5">No workouts found for this email.</td>`;
+                tableBody.appendChild(row);
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching workout data:', error);
+            const tableBody = document.getElementById('workout-table-body');
+            tableBody.innerHTML = `<tr><td colspan="5">Error fetching data. Please try again later.</td></tr>`;
+        });
+}
+
+        function viewWorkoutDetails(workoutId, workoutType) {
+            fetch(`fetch_workout_details.php?workout_id=${workoutId}&type=${encodeURIComponent(workoutType)}`)
+                .then(response => response.json())
+                .then(data => {
+                    const modal = document.getElementById('workout-info-modal');
+                    const details = document.getElementById('workout-details');
+
+                    if (data.error) {
+                        details.innerHTML = `<p>${data.error}</p>`;
                     } else {
-                        const row = document.createElement('tr');
-                        row.innerHTML = `<td colspan="4">No workouts found.</td>`;
-                        tableBody.appendChild(row);
+                        if (workoutType === 'Cardio') {
+                            details.innerHTML = `
+                                <p>Duration: ${data.duration} minutes</p>
+                                <p>Intensity: ${data.intensity}</p>
+                            `;
+                        } else if (workoutType === 'Yoga') {
+                            details.innerHTML = `
+                                <p>Duration: ${data.duration} minutes</p>
+                                <p>Intensity: ${data.intensity}</p>
+                            `;
+                        } else if (workoutType === 'Weights') {
+                            details.innerHTML = `
+                                <p>Sets: ${data.sets}</p>
+                                <p>Reps per Set: ${data.reps_per_set}</p>
+                                <p>Weight: ${data.weight_lbs} lbs</p>
+                            `;
+                        }
                     }
+
+                    modal.style.display = 'block';
                 })
                 .catch(error => {
-                    console.error('Error fetching workout data:', error);
+                    console.error('Error fetching workout details:', error);
+                    const modal = document.getElementById('workout-info-modal');
+                    const details = document.getElementById('workout-details');
+                    details.innerHTML = `<p>Error fetching workout details. Please try again later.</p>`;
+                    modal.style.display = 'block';
                 });
+            }
+
+        function closeModal() {
+            const modal = document.getElementById('workout-info-modal');
+            modal.style.display = 'none';
         }
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -253,7 +307,6 @@
         <table class="workout-table">
             <thead>
                 <tr>
-                    <th>Workout ID</th>
                     <th>User ID</th>
                     <th>Type</th>
                     <th>Date</th>
@@ -263,6 +316,12 @@
                 <!-- Dynamic rows added by JavaScript -->
             </tbody>
         </table>
+
+        <div id="workout-info-modal" style="display: none; padding: 20px; background-color: #E0F7FA; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); margin-top: 20px;">
+            <h3>Workout Details</h3>
+            <div id="workout-details"></div>
+            <button onclick="closeModal()">Close</button>
+        </div>
 
         <!-- Dropdown button for adding a workout -->
         <div class="add-workout">
