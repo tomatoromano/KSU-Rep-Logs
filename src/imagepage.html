@@ -18,7 +18,7 @@
         /* Styling for the logo */
         .logo img {
             position: absolute;
-            height: 700px;
+            height: 600px;
             width: 700px;
             left: 550px;
             top: -70px;
@@ -38,15 +38,15 @@
             width: 85%;
             height: 40%;
             position: relative;
-            margin-top: 500px; 
+            margin-top: 500px;
             padding: 20px;
-            background-color: #E0F7FA; 
+            background-color: #E0F7FA;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             text-align: center;
             display: flex;
             flex-direction: column;
-            justify-content: flex-end; /* Pushes content to the bottom */
+            justify-content: flex-start;
             align-items: center;
         }
 
@@ -55,8 +55,8 @@
         .back-button {
             position: absolute;
             top: 20px;
-            padding: 15px 30px; 
-            font-size: 18px; 
+            padding: 15px 30px;
+            font-size: 18px;
             font-weight: bold;
             color: white;
             background-color: #007bff;
@@ -67,11 +67,11 @@
         }
 
         .signout-button {
-            right: 20px; /* Keeps it aligned to the far right */
+            right: 20px;
         }
 
         .back-button {
-            right: 170px; 
+            right: 170px;
         }
 
         .signout-button:hover,
@@ -115,6 +115,26 @@
         .upload-button:hover {
             background-color: #ed7bea;
         }
+
+        /* File input hidden */
+        .file-input {
+            display: none;
+        }
+
+        #imageContainer {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        #imageContainer img {
+            max-width: 150px;
+            max-height: 150px;
+            border: 2px solid #007bff;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
@@ -133,22 +153,56 @@
     <a href="index.html" class="signout-button">Sign Out</a>
 
     <!-- Back Button -->
-    <a href="home.html" class="back-button">Back</a>
+    <a href="home.html" class="back-button">Home</a>
 
-    <!--info-->
+    <!-- Info -->
     <div class="info">
-        <img src="images\progress pics.png" alt="info, progress history">
+        <img src="images/progress pics.png" alt="info, progress history">
     </div>
 
     <div class="flexguy">
-        <img src="images\flexing guy.png" alt="flex png">
+        <img src="images/flexing guy.png" alt="flex png">
     </div>
 
     <!-- Main section for workout information -->
     <div class="info-section">
-        <p>Add and view your progress pictures here!</p>
-        <button class="upload-button">Upload</button>
+        <p>Inspire and be inspired! View others' progress here!</p>
+
+        <!-- Image container (Now moved above the form) -->
+        <div id="imageContainer"></div>
+
+        <!-- File Upload -->
+        <form id="uploadForm">
+            <input type="file" id="fileInput" class="file-input" accept="image/*">
+            <button type="button" class="upload-button" id="uploadButton">Upload</button>
+        </form>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const uploadButton = document.getElementById('uploadButton');
+            const fileInput = document.getElementById('fileInput');
+            const imageContainer = document.getElementById('imageContainer');
+
+            uploadButton.addEventListener('click', () => {
+                fileInput.click();
+            });
+
+            fileInput.addEventListener('change', () => {
+                const file = fileInput.files[0];
+                if (!file) return;
+
+                // Display the image in the container
+                const img = document.createElement('img');
+                img.src = URL.createObjectURL(file);
+                img.alt = "Uploaded Image";
+                imageContainer.appendChild(img);
+
+                // Clear the file input for subsequent uploads
+                fileInput.value = '';
+            });
+        });
+    </script>
 
 </body>
 </html>

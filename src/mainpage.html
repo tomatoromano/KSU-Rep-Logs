@@ -13,32 +13,34 @@
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
+            font-family: Arial, sans-serif; /* Add a clean font */
         }
 
-        /* Styling for the logo */
+        /* Restrict logo size */
         .logo img {
             position: absolute;
-            height: 700px;
-            width: 700px;
-            left: 550px;
-            top: -70px;
+            height: 500px; /* Adjust to fit the page */
+            width: auto;
+            left: 50%;
+            top: 1px;
+            transform: translateX(-50%);
         }
 
-        /* Styling for the header */
+        /* Restrict header size */
         .header img {
             position: absolute;
-            height: 550px;
-            width: 550px;
-            left: 75px;
-            top: 130px;
+            height: 300px; /* Adjust to fit the page */
+            width: auto;
+            left: 10%;
+            top: 180px;
         }
 
         /* Styling for the main information section */
         .info-section {
             width: 85%;
-            height: 40%;
-            position: relative;
-            margin-top: 500px;
+            max-height: 70vh; /* Prevent overflow */
+            overflow-y: auto; /* Enable scrolling if content overflows */
+            margin-top: 350px; /* Push below header */
             padding: 20px;
             background-color: #E0F7FA;
             border-radius: 10px;
@@ -46,18 +48,55 @@
             text-align: center;
             display: flex;
             flex-direction: column;
-            justify-content: flex-end;
             align-items: center;
+            position: relative;
+        }
+
+        .form-section {
+            display: none; /* Hide forms by default */
+            width: 85%;
+            padding: 20px;
+            margin-top: 20px;
+            background-color: #E0F7FA;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+
+        /* Styling for the workout table */
+        .workout-table {
+            width: 100%; /* Full width of the container */
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 14px; /* Smaller table text */
+        }
+
+        .workout-table th, .workout-table td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .workout-table th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .workout-table td {
+            background-color: #f9f9f9;
+        }
+
+        .workout-table td:nth-child(even) {
+            background-color: #f1f1f1;
         }
 
         /* Styling for the dropdown button */
         .add-workout {
-            margin-top: 10px;
+            margin-top: 20px;
         }
 
         .add-workout select {
-            padding: 10px 20px;
-            font-size: 16px;
+            padding: 8px 16px;
+            font-size: 14px;
             border: none;
             border-radius: 5px;
             background-color: #91DDF2;
@@ -76,11 +115,21 @@
             background-color: #ed7bea;
         }
 
+        /* Restrict mascot size */
+        .mascot img {
+            position: absolute;
+            height: 700px; /* Adjust to fit the page */
+            width: auto;
+            bottom: 150px;
+            right: 10px;
+            z-index: -1;
+        }
+
         /* Styling for the buttons */
         .signout-button,
         .back-button {
-            position: absolute;
-            top: 20px;
+            position: fixed; /* Use fixed positioning to make them stay relative to the viewport */
+            top: 20px; /* Align them near the top */
             padding: 15px 30px;
             font-size: 18px;
             font-weight: bold;
@@ -90,70 +139,67 @@
             border-radius: 5px;
             cursor: pointer;
             text-decoration: none;
+            z-index: 10; /* Ensure they are above other content */
         }
 
         .signout-button {
-            right: 20px;
+            right: 20px; /* Align to the far right */
         }
 
         .back-button {
-            right: 170px;
+            right: 180px; /* Place next to the signout button */
         }
 
-        .signout-button:hover,
-        .back-button:hover {
-            background-color: #0056b3;
-        }
-
-        .info img {
-            position: absolute;
-            height: 420px;
-            width: 420px;
-            top: 350px;
-            left: 90px;
-            z-index: 1;
-        }
-
-        .mascot img {
-            position: absolute;
-            height: 550px;
-            width: 620px;
-            top: 350px;
-            right: 20px;
-            z-index: 1;
-        }
-
-        .form-section {
-            width: 85%;
-            padding: 20px;
-            margin-top: 20px;
-            background-color: #E0F7FA;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            display: none;
-        }
-
-        button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            background-color: #007bff;
-            color: #fff;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #272727;
-        }
     </style>
     <script>
+        function fetchWorkoutData() {
+            fetch('fetch_workouts.php') // Update this to the correct path if needed
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const tableBody = document.getElementById('workout-table-body');
+                    tableBody.innerHTML = ''; // Clear existing rows
+
+                    if (Array.isArray(data) && data.length > 0) {
+                        data.forEach(workout => {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                                <td>${workout.workout_id}</td>
+                                <td>${workout.user_id}</td>
+                                <td>${workout.workout_type}</td>
+                                <td>${workout.date}</td>
+                            `;
+                            tableBody.appendChild(row);
+                        });
+                    } else {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `<td colspan="4">No workouts found.</td>`;
+                        tableBody.appendChild(row);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching workout data:', error);
+                });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchWorkoutData();
+        });
+
         function showForm() {
-            const workoutType = document.getElementById("workout-options").value;
+            // Hide all forms
             document.getElementById("yoga-form").style.display = "none";
             document.getElementById("weights-form").style.display = "none";
             document.getElementById("cardio-form").style.display = "none";
 
+            // Get selected value from dropdown
+            const workoutType = document.getElementById("workout-options").value;
+
+            // Show the selected form
             if (workoutType === "yoga") {
                 document.getElementById("yoga-form").style.display = "block";
             } else if (workoutType === "weights") {
@@ -162,10 +208,58 @@
                 document.getElementById("cardio-form").style.display = "block";
             }
         }
+
+        function getQueryParams() {
+            const search = window.location.search.substring(1);
+            const params = {};
+            search.split("&").forEach(param => {
+                const [key, value] = param.split("=");
+                params[key] = decodeURIComponent(value);
+            });
+            return params;
+        }
+
+        function submitForm(formId, phpUrl) {
+            const form = document.getElementById(formId);
+            const formData = new FormData(form);
+
+            // Add email from query parameters as a hidden field
+            const params = getQueryParams();
+            if (params.email) {
+                formData.append("email", params.email);
+            }
+
+            fetch(phpUrl, {
+                method: "POST",
+                body: formData
+            })
+                .then(response => response.text())
+                .then(data => {
+                    alert(data); // Display response from PHP
+                    form.reset(); // Reset the form after submission
+                    showForm(); // Hide the form
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                });
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const params = getQueryParams();
+
+            // Add email as hidden input to each form
+            document.querySelectorAll("form").forEach(form => {
+                const hiddenEmailInput = document.createElement("input");
+                hiddenEmailInput.type = "hidden";
+                hiddenEmailInput.name = "email";
+                hiddenEmailInput.value = params.email || "";
+                form.appendChild(hiddenEmailInput);
+            });
+        });
+
     </script>
 </head>
 <body>
-
     <!-- Logo -->
     <div class="logo">
         <img src="images/REP lOgs.png" alt="logo">
@@ -173,28 +267,29 @@
 
     <!-- Header -->
     <div class="header">
-        <img src="images/Welcome back.png" alt="welcome">
+        <img src="images/Workout history.png" alt="Workout history">
     </div>
 
-    <!-- Sign Out Button -->
-    <a href="index.html" class="signout-button">Sign Out</a>
-
-    <!-- Back Button -->
-    <a href="home.html" class="back-button">Back</a>
-
-    <!--info-->
-    <div class="info">
-        <img src="images/Workout history.png" alt="info, workout history">
-    </div>
-
-    <!--mascot-->
+    <!-- Mascot -->
     <div class="mascot">
         <img src="images/replogslady.PNG" alt="mascot lady">
     </div>
 
     <!-- Main section for workout information -->
     <div class="info-section">
-        <p>Add and view your workouts here!</p>
+        <table class="workout-table">
+            <thead>
+                <tr>
+                    <th>Workout ID</th>
+                    <th>User ID</th>
+                    <th>Type</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody id="workout-table-body">
+                <!-- Dynamic rows added by JavaScript -->
+            </tbody>
+        </table>
 
         <!-- Dropdown button for adding a workout -->
         <div class="add-workout">
@@ -206,45 +301,50 @@
                 <option value="cardio">Cardio</option>
             </select>
         </div>
-    </div>
+    
+        <!-- Yoga Form -->
+        <div id="yoga-form" class="form-section">
+            <h3>Yoga Workout</h3>
+            <form id="yogaWorkoutForm" onsubmit="event.preventDefault(); submitForm('yogaWorkoutForm', 'add_yoga.php');">
+                <label for="yoga-duration">Duration (minutes):</label>
+                <input type="number" id="yoga-duration" name="duration" required><br><br>
+                <label for="yoga-intensity">Intensity (Low, Medium, High):</label>
+                <input type="text" id="yoga-intensity" name="intensity" required><br><br>
+                <button type="submit">Add Yoga Workout</button>
+            </form>
+        </div>
+    
+        <!-- Weights Form -->
+        <div id="weights-form" class="form-section">
+            <h3>Weights Workout</h3>
+            <form id="weightsWorkoutForm" onsubmit="event.preventDefault(); submitForm('weightsWorkoutForm', 'add_weights.php');">
+                <label for="weights-sets">Sets:</label>
+                <input type="number" id="weights-sets" name="sets" required><br><br>
+                <label for="weights-reps">Reps per Set:</label>
+                <input type="number" id="weights-reps" name="reps" required><br><br>
+                <label for="weights-weight">Weight (lbs):</label>
+                <input type="number" id="weights-weight" name="weight" required><br><br>
+                <button type="submit">Add Weights Workout</button>
+            </form>
+        </div>
+    
+        <!-- Cardio Form -->
+        <div id="cardio-form" class="form-section">
+            <h3>Cardio Workout</h3>
+            <form id="cardioWorkoutForm" onsubmit="event.preventDefault(); submitForm('cardioWorkoutForm', 'add_cardio.php');">
+                <label for="cardio-duration">Duration (minutes):</label>
+                <input type="number" id="cardio-duration" name="duration" required><br><br>
+                <label for="cardio-intensity">Intensity (Low, Medium, High):</label>
+                <input type="text" id="cardio-intensity" name="intensity" required><br><br>
+                <button type="submit">Add Cardio Workout</button>
+            </form>
+        </div>
+        
+        <!-- Sign Out Button -->
+    <a href="index.html" class="signout-button">Sign Out</a>
 
-    <!-- Yoga Form -->
-    <div id="yoga-form" class="form-section">
-        <h3>Yoga Workout</h3>
-        <form id="yogaWorkoutForm" action="add_yoga.php" method="post">
-            <label for="yoga-duration">Duration (minutes):</label>
-            <input type="number" id="yoga-duration" name="duration" required><br><br>
-            <label for="yoga-intensity">Intensity (Low, Medium, High):</label>
-            <input type="text" id="yoga-intensity" name="intensity" required><br><br>
-            <button type="submit">Add Yoga Workout</button>
-        </form>
-    </div>
-
-    <!-- Weights Form -->
-    <div id="weights-form" class="form-section">
-        <h3>Weights Workout</h3>
-        <form id="weightsWorkoutForm" action="add_weights.php" method="post">
-            <label for="weights-sets">Sets:</label>
-            <input type="number" id="weights-sets" name="sets" required><br><br>
-            <label for="weights-reps">Reps per Set:</label>
-            <input type="number" id="weights-reps" name="reps" required><br><br>
-            <label for="weights-weight">Weight (lbs):</label>
-            <input type="number" id="weights-weight" name="weight" required><br><br>
-            <button type="submit">Add Weights Workout</button>
-        </form>
-    </div>
-
-    <!-- Cardio Form -->
-    <div id="cardio-form" class="form-section">
-        <h3>Cardio Workout</h3>
-        <form id="cardioWorkoutForm" action="add_cardio.php" method="post">
-            <label for="cardio-duration">Duration (minutes):</label>
-            <input type="number" id="cardio-duration" name="duration" required><br><br>
-            <label for="cardio-intensity">Intensity (Low, Medium, High):</label>
-            <input type="text" id="cardio-intensity" name="intensity" required><br><br>
-            <button type="submit">Add Cardio Workout</button>
-        </form>
-    </div>
-
-</body>
-</html>
+    <!-- Back Button -->
+    <a href="home.html" class="back-button">Home</a>
+    </body>
+    </html>
+    
