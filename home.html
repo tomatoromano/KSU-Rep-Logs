@@ -77,34 +77,61 @@
             transform: scale(1.2); 
         }
 
-        </style>
-        </head>
-        <body>
-             <!-- Logo -->
+    </style>
+</head>
+<body>
+    <!-- Logo -->
     <div class="logo">
         <img src="images/REP lOgs.png" alt="logo">
     </div>
 
     <!-- Header -->
     <div class="header">
-        <img src="images/Welcome back.png" alt="welcome">
+        <img src="images/Welcome back2.png" alt="welcome">
     </div>
 
-     <!-- workout logs Button -->
+    <!-- workout logs Button -->
     <div class="workouthistory">
-        <a href="mainpage.html">
-            <img src="images\Workout logs.png" alt="workout history button">
+        <a id="workoutLink" href="#">
+            <img src="images/Workout logs.png" alt="workout history button">
         </a>
     </div>
 
-     <!-- images page Button -->
+    <!-- images page Button -->
     <div class="imagesbutton">
-        <a href="imagepage.html">
-            <img src="images\Upload Image.png" alt="workout photos button">
+        <a id="imagesLink" href="http://ec2-50-19-129-214.compute-1.amazonaws.com/src/imagepage.html">
+            <img src="images/Upload Image.png" alt="workout photos button">
         </a>
     </div>
 
     <!-- Sign Out Button -->
     <a href="index.html" class="signout-button">Sign Out</a>
-        </body>
+
+    <script>
+        function getQueryParams() {
+            const search = window.location.search.substring(1);
+            const params = {};
+            search.split('&').forEach(param => {
+                const [key, value] = param.split('=');
+                params[key] = decodeURIComponent(value);
+            });
+            return params;
+        }
+
+        // Get email from query parameters
+        const params = getQueryParams();
+        const email = params.email;
+
+        if (email) {
+            document.addEventListener('DOMContentLoaded', () => {
+                // Update the links to include the email as a query parameter
+                const workoutLink = document.getElementById('workoutLink');
+                const imagesLink = document.getElementById('imagesLink');
+
+                workoutLink.href = `mainpage.html?email=${encodeURIComponent(email)}`;
+                imagesLink.href = `imagepage.html?email=${encodeURIComponent(email)}`;
+            });
+        }
+    </script>
+</body>
 </html>
