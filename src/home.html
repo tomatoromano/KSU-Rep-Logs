@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RepLogs</title>
+    <style>
+        body {
+            background: linear-gradient(to bottom, #91DDF2 1%, white 30%);
+            background-attachment: fixed;
+            height: 100vh;
+            margin: 0;
+            background-size: 100% 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        /* Styling for the logo */
+        .logo img {
+            position: absolute;
+            height: 700px;
+            width: 700px;
+            left: 550px;
+            top: -70px;
+        }
+
+        /* Styling for the header */
+        .header img {
+            position: absolute;
+            height: 450px;
+            width: 470px;
+            left: 650px;
+            top: 130px;
+        }
+
+        /* Styling for the sign-out button */
+        .signout-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 15px 30px; /* Increased size */
+            font-size: 18px; /* Made text larger */
+            font-weight: bold;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .signout-button:hover {
+            background-color: #0056b3;
+        }
+
+        .workouthistory img {
+            position:relative;
+            top: 500px;
+            right: -320px;
+            width: 420px;
+            transition: transform 0.3s ease; 
+        }
+
+        .workouthistory img:hover {
+            transform: scale(1.2); 
+        }
+
+        .imagesbutton img {
+            position:relative;
+            top: 125px;
+            right: 300px;
+            width: 450px;
+            transition: transform 0.3s ease; 
+        }
+
+        .imagesbutton img:hover {
+            transform: scale(1.2); 
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Logo -->
+    <div class="logo">
+        <img src="images/REP lOgs.png" alt="logo">
+    </div>
+
+    <!-- Header -->
+    <div class="header">
+        <img src="images/Welcome back2.png" alt="welcome">
+    </div>
+
+    <!-- workout logs Button -->
+    <div class="workouthistory">
+        <a id="workoutLink" href="#">
+            <img src="images/Workout logs.png" alt="workout history button">
+        </a>
+    </div>
+
+    <!-- images page Button -->
+    <div class="imagesbutton">
+        <a id="imagesLink" href="http://ec2-50-19-129-214.compute-1.amazonaws.com/src/imagepage.html">
+            <img src="images/Upload Image.png" alt="workout photos button">
+        </a>
+    </div>
+
+    <!-- Sign Out Button -->
+    <a href="index.html" class="signout-button">Sign Out</a>
+
+    <script>
+        function getQueryParams() {
+            const search = window.location.search.substring(1);
+            const params = {};
+            search.split('&').forEach(param => {
+                const [key, value] = param.split('=');
+                params[key] = decodeURIComponent(value);
+            });
+            return params;
+        }
+
+        // Get email from query parameters
+        const params = getQueryParams();
+        const email = params.email;
+
+        if (email) {
+            document.addEventListener('DOMContentLoaded', () => {
+                // Update the links to include the email as a query parameter
+                const workoutLink = document.getElementById('workoutLink');
+                const imagesLink = document.getElementById('imagesLink');
+
+                workoutLink.href = `mainpage.html?email=${encodeURIComponent(email)}`;
+                imagesLink.href = `imagepage.html?email=${encodeURIComponent(email)}`;
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RepLogs</title>
+    <style>
+        body {
+            background: linear-gradient(to bottom, #91DDF2 1%, white 30%);
+            background-attachment: fixed;
+            height: 100vh;
+            margin: 0;
+            background-size: 100% 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .title img {
+            position: absolute;
+            height: 800px;
+            width: 800px;
+            left: 490px;
+            top: -60px;
+            z-index: -1;
+        }
+        button {
+            padding: 20px 40px;
+            border: none;
+            border-radius: 10px;
+            background-color: #007bff;
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        button:hover {
+            background-color: #272727;
+        }
+    </style>
+</head>
+<body>
+    <!--Rep Logs logo-->
+    <div class="title">
+        <img src="images/REP lOgs.png" alt="website header">
+    </div>
+
+    <!-- Single button in the center -->
+    <button onclick="window.location.href='https://us-east-1klaq6ojuf.auth.us-east-1.amazoncognito.com/login/continue?client_id=13g9d6elhfbav76vncremgdc33&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Floggedin.html&response_type=code&scope=email+openid+phone'">
+        Sign In/Sign Up
+    </button>
+</body>
+</html>
