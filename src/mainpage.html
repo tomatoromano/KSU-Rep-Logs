@@ -166,7 +166,6 @@
                 data.forEach(workout => {
                     const row = document.createElement('tr');
                     row.innerHTML = `
-                        <td>${workout.workout_id}</td>
                         <td>${workout.user_id}</td>
                         <td>${workout.workout_type}</td>
                         <td>${workout.date}</td>
@@ -334,6 +333,7 @@
                     <th>User ID</th>
                     <th>Type</th>
                     <th>Date</th>
+                    <th>Info</th>
                 </tr>
             </thead>
             <tbody id="workout-table-body">
