@@ -1,1 +1,0 @@
-https://us-east-1klaq6ojuf.auth.us-east-1.amazoncognito.com/login?client_id=13g9d6elhfbav76vncremgdc33&redirect_uri=http://localhost:8000/loggedin.html&response_type=code&scope=email+openid+phone
