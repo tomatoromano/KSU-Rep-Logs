@@ -19,7 +19,7 @@
         /* Restrict logo size */
         .logo img {
             position: absolute;
-            height: 200px; /* Adjust to fit the page */
+            height: 450px; /* Adjust to fit the page */
             width: auto;
             left: 50%;
             top: 10px;
@@ -29,11 +29,13 @@
         /* Restrict header size */
         .header img {
             position: absolute;
-            height: 300px; /* Adjust to fit the page */
+            height: 300px; /* Adjust as needed */
             width: auto;
-            left: 10%;
-            top: 180px;
+            left: 15%;
+            top: 170px; /* Adjust distance from top */
+            transform: translateX(-50%);
         }
+
 
         /* Styling for the main information section */
         .info-section {
@@ -118,11 +120,30 @@
         /* Restrict mascot size */
         .mascot img {
             position: absolute;
-            height: 150px; /* Adjust to fit the page */
+            height: 350px; /* Adjust to fit the page */
             width: auto;
-            bottom: 20px;
-            right: 10px;
+            bottom: 500px;
+            right: 20px;
         }
+         /* Styling for the sign out button*/
+         .signout-button {
+    position: absolute;
+    top: 20px; /* Aligns to top */
+    right: 20px; /* Aligns to right */
+    padding: 15px 30px;
+    font-size: 18px;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.signout-button:hover {
+    background-color: #0056b3;
+}
+
     </style>
     <script>
         function fetchWorkoutData() {
@@ -145,6 +166,7 @@
                 data.forEach(workout => {
                     const row = document.createElement('tr');
                     row.innerHTML = `
+                        <td>${workout.workout_id}</td>
                         <td>${workout.user_id}</td>
                         <td>${workout.workout_type}</td>
                         <td>${workout.date}</td>
@@ -293,8 +315,11 @@
 
     <!-- Header -->
     <div class="header">
-        <img src="images/Workout history.png" alt="Workout history">
+        <img src="images/Workout history.png" alt="Workout History">
     </div>
+    
+    <!-- Sign Out Button -->
+    <a href="index.html" class="signout-button">Sign Out</a>
 
     <!-- Mascot -->
     <div class="mascot">
@@ -306,11 +331,9 @@
         <table class="workout-table">
             <thead>
                 <tr>
-                    <th>User</th>
+                    <th>User ID</th>
                     <th>Type</th>
                     <th>Date</th>
-                    <th>Info</th>
-
                 </tr>
             </thead>
             <tbody id="workout-table-body">
@@ -374,4 +397,3 @@
         </div>
     </body>
     </html>
-    
